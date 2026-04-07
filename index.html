@@ -121,10 +121,6 @@
 <div class="counter-box">
   <div class="slots-number" id="slotsCount">--</div>
   <div class="slots-label">مقعد متبقي من أصل 20</div>
-  <div class="timer">
-    ⏳ ينتهي العرض خلال
-    <div class="timer-value" id="timerDisplay">--:--:--</div>
-  </div>
 </div>
 
 <!-- زر التسجيل -->
@@ -139,7 +135,7 @@
 
 <script>
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrjlyWRkogKOlapovY-tgAUJEm1VH5tjY9LcHigSMDClyEcNnungm1tI5ZUt2_FfoQVQ/exec';
-  const OFFER_END_DATE = new Date('2026-04-30T14:00:00');
+  
 
   async function updateSlots() {
     try {
@@ -154,27 +150,7 @@
     } catch (e) {}
   }
 
-  function updateTimer() {
-    const now = new Date();
-    const diff = OFFER_END_DATE - now;
-
-    if (diff <= 0) {
-      document.getElementById('timerDisplay').textContent = 'انتهى العرض';
-      return;
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById('timerDisplay').textContent =
-      `${days}ي ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
-  }
-
   updateSlots();
-  updateTimer();
-  setInterval(updateTimer, 1000);
   setInterval(updateSlots, 30000);
 </script>
 

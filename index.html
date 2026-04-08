@@ -137,23 +137,18 @@
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHzI4hdr-5gSwn3olZnxNBH3hoiLsF8IDS3cJk-JOoJ2AJzWn3s4iix_wGd4zydSCwNA/exec';
   
 
-  async function updateSlots() {
-    try {
-      const res = await fetch(SCRIPT_URL + '?action=getSlots', {
-        redirect: 'follow'
-      });
-      const text = await res.text();
-      const data = JSON.parse(text);
-      document.getElementById('slotsCount').textContent = data.availableSlots;
-
-      if (data.availableSlots <= 0) {
-        document.getElementById('registerBtn').style.display = 'none';
-        document.getElementById('fullNotice').style.display = 'block';
-      }
-    } catch (e) {
-      console.log(e);
+  function updateSlots() {
+  const script = document.createElement('script');
+  window.handleSlots = function(data) {
+    document.getElementById('slotsCount').textContent = data.availableSlots;
+    if (data.availableSlots <= 0) {
+      document.getElementById('registerBtn').style.display = 'none';
+      document.getElementById('fullNotice').style.display = 'block';
     }
-  }
+  };
+  script.src = SCRIPT_URL + '?action=getSlots&callback=handleSlots';
+  document.body.appendChild(script);
+}
 
   updateSlots();
   setInterval(updateSlots, 30000);

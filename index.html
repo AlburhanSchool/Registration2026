@@ -15,23 +15,29 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Careem', sans-serif;;
-      background: #1a1a2e;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-    }
+  font-family: 'Careem', sans-serif;
+  background: #1a1a2e;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
 
-    .poster-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 430px;
-    }
+.poster-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  overflow: hidden;
+}
 
-    .poster-wrapper img {
-      width: 100%;
-      display: block;
-    }
+.poster-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
 
     /* ===== العداد فوق رقم 20 ===== */
     .counter-box {

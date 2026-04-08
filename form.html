@@ -332,11 +332,22 @@
           weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         }) + ' -  من الساعة 8:00 صباحًا الى الساعة 12:30 ظهرًا';
 
-        document.getElementById('successMsg').innerHTML = `
-          يرجى الحضور للمدرسة لإتمام الدفع بحلول:<br>
-          <strong>${deadlineStr}</strong><br><br>
-          ⚠️ سيتم إلغاء حجزك تلقائياً إن لم يتم الدفع في الموعد
-        `;
+        const now = new Date();
+const hour = now.getHours();
+const day = now.getDay(); // 0=أحد، 4=خميس
+const isWorkDay = day >= 0 && day <= 4;
+const isWorkHour = hour >= 8 && (hour < 12 || (hour === 12 && now.getMinutes() <= 30));
+const duringWorkTime = isWorkDay && isWorkHour;
+
+const msg = duringWorkTime
+  ? `يمكنك الحضور والدفع <strong>اليوم أو غداً</strong> خلال ساعات العمل`
+  : `يرجى الحضور للمدرسة لإتمام الدفع بحلول:<br><strong>${deadlineStr}</strong>`;
+
+document.getElementById('successMsg').innerHTML = `
+  ${msg}<br><br>
+  ساعات الدفع: 8:00 صباحاً - 12:30 ظهراً (الأحد - الخميس)<br>
+  ⚠️ سيتم إلغاء حجزك تلقائياً إن لم يتم الدفع في الموعد
+`;
 
         btn.textContent = 'تم التسجيل ✓';
       } else {
